@@ -5,6 +5,9 @@ import {HeaderComponent} from "../header/header.component";
 import {FindWeatherComponent} from "../find-weather/find-weather.component";
 import {MainWidgetComponent} from "../main-widget/main-widget.component";
 import {WidgetComponent} from "../widget/widget.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { OpenWeatherMapService } from "../../services/open-weather-map.service";
 
 @NgModule({
   declarations: [
@@ -14,7 +17,8 @@ import {WidgetComponent} from "../widget/widget.component";
     MainWidgetComponent,
     WidgetComponent
   ],
-  imports: [],
+  imports: [ReactiveFormsModule, HttpClientModule],
+  providers: [OpenWeatherMapService],
   exports: [WeatherComponent],
 })
 export class WeatherModule {}

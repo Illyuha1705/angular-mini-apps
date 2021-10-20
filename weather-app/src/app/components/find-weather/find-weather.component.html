@@ -1,8 +1,16 @@
-<div class="find-weather__wrapper">
-  <input
-    type="text"
-    class="find-weather__city"
-    placeholder="Enter the name of the city">
+<form
+  [formGroup]="weatherSearchForm"
+  (ngSubmit)="sentToOpenWeatherMap(weatherSearchForm.value)">
+  <div class="find-weather__wrapper">
+    <input
+      type="text"
+      class="find-weather__city"
+      placeholder="Enter the name of the city"
+      formControlName="location">
 
-  <button class="find-weather__find-btn">Get</button>
-</div>
+    <button
+      class="find-weather__find-btn"
+      type="submit"
+    >Get</button>
+  </div>
+</form>
