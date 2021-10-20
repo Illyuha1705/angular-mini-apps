@@ -1,0 +1,39 @@
+.find-weather__wrapper {
+  width: 250px;
+  height: 36px;
+  border-radius: 25px 0 0 25px;
+  background-color: rgba(26, 28, 62, 0.5);
+  position: relative;
+  margin: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.find-weather__city {
+  padding: 10px 25px;
+  width: 200px;
+  border-radius: 15px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-weight: 700;
+  position: absolute;
+  left: 0;
+  top: 0;
+  outline: none;
+}
+
+.find-weather__find-btn {
+  color: white;
+  font-weight: 700;
+  position: absolute;
+  right: -20px;
+  bottom: 0;
+  background: #412fc2;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  box-shadow: #412fc2 3px 3px 15px, #412fc2 -3px -3px 15px;
+}
