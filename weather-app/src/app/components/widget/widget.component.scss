@@ -1,0 +1,50 @@
+.widget__wrapper {
+  padding: 15px 20px;
+  background: transparent;
+}
+
+.widget__day {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.widget__weather-img {
+  max-width: 25px;
+  max-height: 25px;
+  width: 25px;
+  height: 25px;
+  margin-bottom: 10px;
+
+  .img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.widget__temperature {
+  color: white;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.widget__day-weather {
+  color: white;
+  font-size: 12px;
+}
+
+.widget-active {
+  background-color: rgba(79, 34, 54, 0.6);
+  border-radius: 15px;
+  position: relative;
+  &:after {
+    content: '';
+    border: 20px solid transparent;
+    border-top: 20px solid rgba(79, 34, 54, 0.6);
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
