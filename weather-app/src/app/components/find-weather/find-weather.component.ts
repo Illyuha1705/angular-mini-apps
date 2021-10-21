@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {OpenWeatherMapService} from "../../services/open-weather-map.service";
+import {DataStorageService} from "../../services/data-storage.service";
 
 @Component({
   selector: 'app-find-weather',
@@ -16,14 +17,12 @@ export class FindWeatherComponent implements OnInit {
 
   ngOnInit(): void {
     this.weatherSearchForm = this.formBuilder.group({
-      location: ['']
+      location: ['Kharkov, Ukraine']
     });
   }
 
   public sentToOpenWeatherMap(formValue: any): void {
-    this.openWeatherMapService
-      .getWeather(formValue.location)
-      .subscribe(data => console.log(data));
+     this.openWeatherMapService.getWeather(formValue.location);
   }
 
 }

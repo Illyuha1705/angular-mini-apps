@@ -8,6 +8,7 @@ import {WidgetComponent} from "../widget/widget.component";
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { OpenWeatherMapService } from "../../services/open-weather-map.service";
+import {DataStorageService} from "../../services/data-storage.service";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { OpenWeatherMapService } from "../../services/open-weather-map.service";
     WidgetComponent
   ],
   imports: [ReactiveFormsModule, HttpClientModule],
-  providers: [OpenWeatherMapService],
+  providers: [OpenWeatherMapService, DataStorageService],
   exports: [WeatherComponent],
 })
 export class WeatherModule {}
