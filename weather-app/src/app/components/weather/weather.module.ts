@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { OpenWeatherMapService } from "../../services/open-weather-map.service";
 import {DataStorageService} from "../../services/data-storage.service";
+import {GeneralInfoComponent} from "../general-info/general-info.component";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {DataStorageService} from "../../services/data-storage.service";
     HeaderComponent,
     FindWeatherComponent,
     MainWidgetComponent,
-    WidgetComponent
+    WidgetComponent,
+    GeneralInfoComponent,
   ],
   imports: [ReactiveFormsModule, HttpClientModule],
   providers: [OpenWeatherMapService, DataStorageService],

@@ -36,7 +36,7 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWeatherData(): void {
-    this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`
+    this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`;
 
     this.dates = [
       this.weatherData.forecast.forecastday[0].date,
