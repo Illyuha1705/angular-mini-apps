@@ -1,11 +1,11 @@
 <div class="widget__wrapper widget-active" >
   <div class="widget__day">Friday 17</div>
   <div class="widget__weather-img">
-    <img src="./assets/images/cloudy.png" alt="" class="img">
+    <img [src]="currentWeatherImg" alt="" class="img">
   </div>
   <div class="widget__temperature">
-    &deg;С /
-    {{weatherData?.main.temp_max - 273.15}}&deg;С
+    {{minTemperature}}&deg; /
+    {{maxTemperature}}&deg;
   </div>
-  <div class="widget__day-weather">Mostly Cloudy</div>
+  <div class="widget__day-weather">{{weather}}</div>
 </div>

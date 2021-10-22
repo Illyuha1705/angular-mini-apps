@@ -49,7 +49,7 @@ export class FindWeatherComponent implements OnInit {
     localStorage.setItem('lastCity', formValue.location);
   }
 
-  public sentToApiAndToLS(formValue: {location: string}) {
+  public sentToApiAndToLS(formValue: {location: string}): void {
     this.sentToApi(formValue);
     this.sentToLS(formValue);
   }

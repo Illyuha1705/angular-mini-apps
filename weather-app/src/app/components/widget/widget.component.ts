@@ -10,6 +10,10 @@ import {Subject} from "rxjs";
 })
 export class WidgetComponent implements OnInit, OnDestroy {
   weatherData: any;
+  minTemperature = '';
+  maxTemperature = '';
+  weather = '';
+  currentWeatherImg = '';
 
   private destroy$: Subject<void> = new Subject();
 
@@ -23,8 +27,16 @@ export class WidgetComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (updatedWeatherData: any) => {
           this.weatherData = updatedWeatherData;
+          this.retrieveMainWeatherData();
         }
       })
+  }
+
+  public retrieveMainWeatherData() {
+      this.minTemperature = `${Math.round(this.weatherData?.main.temp_min - 273.15)}`;
+      this.maxTemperature = `${Math.round(this.weatherData?.main.temp_max - 273.15)}`;
+      this.weather = this.weatherData?.weather[0].description;
+      this.currentWeatherImg = `https://openweathermap.org/img/wn/${this.weatherData?.weather[0].icon}@2x.png`
   }
 
   ngOnDestroy(): void {
