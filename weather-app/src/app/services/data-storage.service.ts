@@ -1,16 +1,12 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DataStorageService {
   @Output() weatherDataChanged$: EventEmitter<object> = new EventEmitter<object>();
 
   weatherData: object;
 
-  constructor() { }
-
-  updateWeatherData() {
+  public updateWeatherData(): void {
     this.weatherDataChanged$.emit(this.weatherData);
   }
 }

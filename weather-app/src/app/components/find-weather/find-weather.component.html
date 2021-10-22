@@ -1,6 +1,6 @@
 <form
   [formGroup]="weatherSearchForm"
-  (ngSubmit)="sentToOpenWeatherMap(weatherSearchForm.value)">
+  (ngSubmit)="sentToApiAndToLS(weatherSearchForm.value)">
   <div class="find-weather__wrapper">
     <input
       type="text"
