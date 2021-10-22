@@ -1,9 +1,18 @@
-.main-widget__wrapper {
+.main-widget__container {
   margin: 60px 0;
   padding: 25px 40px 40px 40px;
   border-radius: 15px;
   background-color: rgba(79, 34, 54, 0.4);
+}
+
+.main-widget__city {
+  color: white;
+  text-align: center;
+}
+
+.main-widget__wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 45px 0 20px 0;
 }

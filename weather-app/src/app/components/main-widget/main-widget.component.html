@@ -1,8 +1,31 @@
-<div class="main-widget__wrapper">
-  <app-widget></app-widget>
-  <app-widget></app-widget>
-  <app-widget></app-widget>
-  <app-widget></app-widget>
-  <app-widget></app-widget>
+<div class="main-widget__container">
+  <h3 class="main-widget__city">{{currentCity}}</h3>
+  <div class="main-widget__wrapper">
+    <app-widget
+      [date]="dates[0]"
+      [image]="weatherImages[0]"
+      [minTemperature]="minTemperatures[0]"
+      [maxTemperature]="maxTemperatures[0]"
+      [weatherText]="weatherTexts[0]"
+    ></app-widget>
+
+    <app-widget
+      [date]="dates[1]"
+      [image]="weatherImages[1]"
+      [minTemperature]="minTemperatures[1]"
+      [maxTemperature]="maxTemperatures[1]"
+      [weatherText]="weatherTexts[1]"
+    ></app-widget>
+
+    <app-widget
+      [date]="dates[2]"
+      [image]="weatherImages[2]"
+      [minTemperature]="minTemperatures[2]"
+      [maxTemperature]="maxTemperatures[2]"
+      [weatherText]="weatherTexts[2]"
+    ></app-widget>
+  </div>
+
+
 </div>
 
