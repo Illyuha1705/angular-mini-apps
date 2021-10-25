@@ -12,5 +12,9 @@ export class WidgetComponent {
   @Input() maxTemperature: string;
   @Input() weatherText: string;
 
+  active = false;
 
+  public chooseActiveWidget():void {
+    this.active
+  }
 }

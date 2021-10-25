@@ -1,15 +1,15 @@
 <header class="header">
   <div class="logo">
-    <img src="" alt="logo">
+    <img src="./assets/images/logo.svg" alt="Weather App">
   </div>
 
   <div class="short-info">
     <div class="short-info__current-weather">
-      <img src="./assets/images/cloudy.png" alt="" class="current-weather__img">
+      <img [src]="currentWeatherImage" [alt]="currentWeatherText" class="current-weather__img">
     </div>
 
-    <div class="short-info__temperature">15 C</div>
-    <div class="short-info__weather-status">Cloudy</div>
+    <div class="short-info__temperature">{{currentWeather}}&deg;C</div>
+    <div class="short-info__weather-status">{{currentWeatherText}}</div>
   </div>
 
   <app-find-weather></app-find-weather>

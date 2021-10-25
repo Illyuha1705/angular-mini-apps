@@ -23,8 +23,6 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
   constructor(private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
-    this.weatherData = this.dataStorageService.weatherData;
-
     this.dataStorageService.weatherDataChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -38,36 +36,13 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
   public retrieveWeatherData(): void {
     this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`;
 
-    this.dates = [
-      this.weatherData.forecast.forecastday[0].date,
-      this.weatherData.forecast.forecastday[1].date,
-      this.weatherData.forecast.forecastday[2].date
-    ];
-
-    this.weatherImages = [
-      this.weatherData.forecast.forecastday[0].day.condition.icon,
-      this.weatherData.forecast.forecastday[1].day.condition.icon,
-      this.weatherData.forecast.forecastday[2].day.condition.icon
-    ];
-
-    this.minTemperatures = [
-      this.weatherData.forecast.forecastday[0].day.mintemp_c,
-      this.weatherData.forecast.forecastday[1].day.mintemp_c,
-      this.weatherData.forecast.forecastday[2].day.mintemp_c
-    ];
-
-    this.maxTemperatures = [
-      this.weatherData.forecast.forecastday[0].day.maxtemp_c,
-      this.weatherData.forecast.forecastday[1].day.maxtemp_c,
-      this.weatherData.forecast.forecastday[2].day.maxtemp_c
-    ];
-
-    this.weatherTexts = [
-      this.weatherData.forecast.forecastday[0].day.condition.text,
-      this.weatherData.forecast.forecastday[1].day.condition.text,
-      this.weatherData.forecast.forecastday[2].day.condition.text
-    ];
-
+    this.weatherData.forecast.forecastday.forEach(day => {
+      this.dates.push(day.date);
+      this.weatherImages.push(day.day.condition.icon);
+      this.minTemperatures.push(day.day.mintemp_c);
+      this.maxTemperatures.push(day.day.maxtemp_c);
+      this.weatherTexts.push(day.day.condition.text);
+    });
   }
 
   ngOnDestroy(): void {
