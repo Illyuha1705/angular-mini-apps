@@ -1,13 +1,11 @@
-<div class="widget__wrapper widget-active"
-     (click)="chooseActiveWidget()"
->
-  <div class="widget__day">{{date}}</div>
+<div class="widget__wrapper widget-active">
+  <div class="widget__day">{{widget.date}}</div>
   <div class="widget__weather-img">
-    <img [src]="image" [alt]="weatherText" class="img">
+    <img [src]="widget.image" [alt]="widget.weatherText" class="img">
   </div>
   <div class="widget__temperature">
-    {{minTemperature}}&deg; /
-    {{maxTemperature}}&deg;
+    {{widget.minTemperature}}&deg; /
+    {{widget.maxTemperature}}&deg;
   </div>
-  <div class="widget__day-weather">{{weatherText}}</div>
+  <div class="widget__day-weather">{{widget.weatherText}}</div>
 </div>

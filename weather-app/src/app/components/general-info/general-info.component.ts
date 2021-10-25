@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataStorageService} from "../../services/data-storage.service";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {WidgetGeneralInfoModel} from "../../models/widget-general-info.model";
 
 @Component({
   selector: 'app-general-info',
@@ -11,10 +12,8 @@ import {takeUntil} from "rxjs/operators";
 export class GeneralInfoComponent implements OnInit, OnDestroy {
   weatherData: any;
 
-  humidity: string[] = [];
-  maxWindSpeed: string[] = [];
-  chanceOfRain: string[] = [];
-  visKm: string[] = [];
+  generalInfo: WidgetGeneralInfoModel[] = [];
+  generalInfoIndex = 0;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -29,14 +28,28 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
           this.retrieveWeatherData();
         }
       });
+
+    this.dataStorageService.generalInfoIndexChanged$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (updatedIndex: number) => {
+          this.generalInfoIndex = updatedIndex;
+        }
+      })
   }
 
   public retrieveWeatherData(): void {
-    this.weatherData.forecast.forecastday(dayData => {
-      this.humidity.push(dayData.avghumidity);
-      this.maxWindSpeed.push(dayData.maxwind_kph);
-      this.chanceOfRain.push(dayData.daily_chance_of_rain);
-      this.visKm.push(dayData.avgvis_km);
+    this.generalInfo = [];
+
+    this.weatherData.forecast.forecastday.forEach(dayData => {
+      this.generalInfo.push(
+        new WidgetGeneralInfoModel(
+          dayData.day.avghumidity,
+          dayData.day.daily_chance_of_rain,
+          dayData.day.maxwind_kph,
+          dayData.day.avgvis_km,
+        )
+      );
     });
   }
 

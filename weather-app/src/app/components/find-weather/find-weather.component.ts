@@ -41,7 +41,6 @@ export class FindWeatherComponent implements OnInit {
       .getWeather(formValue.location)
       .subscribe((data) => {
         this.dataStorageService.setWeatherData = data;
-        this.dataStorageService.updateWeatherData();
       });
   }
 

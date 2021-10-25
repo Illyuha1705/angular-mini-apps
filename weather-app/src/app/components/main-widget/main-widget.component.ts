@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DataStorageService} from "../../services/data-storage.service";
 import {takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
+import {WidgetModel} from "../../models/widget.model";
 
 @Component({
   selector: 'app-main-widget',
@@ -9,14 +10,11 @@ import {Subject} from "rxjs";
   styleUrls: ['./main-widget.component.scss']
 })
 export class MainWidgetComponent implements OnInit, OnDestroy {
+
   weatherData: any;
 
+  public widgets: WidgetModel[] = [];
   currentCity = '';
-  weatherTexts: string[] = [];
-  dates: string[] = [];
-  weatherImages: string[] = [];
-  minTemperatures: string[] = [];
-  maxTemperatures: string[] = [];
 
   private destroy$: Subject<void> = new Subject();
 
@@ -34,20 +32,28 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWeatherData(): void {
+    this.widgets = [];
     this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`;
 
     this.weatherData.forecast.forecastday.forEach(day => {
-      this.dates.push(day.date);
-      this.weatherImages.push(day.day.condition.icon);
-      this.minTemperatures.push(day.day.mintemp_c);
-      this.maxTemperatures.push(day.day.maxtemp_c);
-      this.weatherTexts.push(day.day.condition.text);
+      this.widgets.push(
+        new WidgetModel(
+          day.date,
+          day.day.condition.icon,
+          day.day.condition.text,
+          day.day.mintemp_c,
+          day.day.maxtemp_c
+        )
+      );
     });
+  }
+
+  chooseActiveWidget(index: number) {
+    this.dataStorageService.setGeneralInfoIndex = index;
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

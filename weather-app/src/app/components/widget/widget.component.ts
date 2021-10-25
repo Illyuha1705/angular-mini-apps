@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {WidgetModel} from "../../models/widget.model";
 
 @Component({
   selector: 'app-widget',
@@ -6,15 +7,5 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./widget.component.scss']
 })
 export class WidgetComponent {
-  @Input() date: string;
-  @Input() image: string;
-  @Input() minTemperature: string;
-  @Input() maxTemperature: string;
-  @Input() weatherText: string;
-
-  active = false;
-
-  public chooseActiveWidget():void {
-    this.active
-  }
+  @Input() widget: WidgetModel;
 }

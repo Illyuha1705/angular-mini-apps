@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { OpenWeatherMapService } from "../../services/open-weather-map.service";
 import {DataStorageService} from "../../services/data-storage.service";
 import {GeneralInfoComponent} from "../general-info/general-info.component";
+import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import {GeneralInfoComponent} from "../general-info/general-info.component";
     WidgetComponent,
     GeneralInfoComponent,
   ],
-  imports: [ReactiveFormsModule, HttpClientModule],
+  imports: [ReactiveFormsModule, HttpClientModule, BrowserModule],
   providers: [OpenWeatherMapService, DataStorageService],
   exports: [WeatherComponent],
 })
