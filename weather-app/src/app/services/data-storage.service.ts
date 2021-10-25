@@ -1,11 +1,11 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 
 @Injectable()
 export class DataStorageService {
   @Output() weatherDataChanged$: EventEmitter<object> = new EventEmitter<object>();
   @Output() generalInfoIndexChanged$: EventEmitter<number> = new EventEmitter<number>();
 
-  private weatherData: any;
+  private weatherData: {};
   private generalInfoIndex: number;
 
   private updateWeatherData(): void {

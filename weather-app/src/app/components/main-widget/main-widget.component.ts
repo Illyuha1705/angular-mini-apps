@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataStorageService} from "../../services/data-storage.service";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
-import {WidgetModel} from "../../models/widget.model";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataStorageService }           from '../../services/data-storage.service';
+import { takeUntil }                    from 'rxjs/operators';
+import { Subject }                      from 'rxjs';
+import { WidgetModel }                  from '../../models/widget.model';
 
 @Component({
   selector: 'app-main-widget',
@@ -11,14 +11,14 @@ import {WidgetModel} from "../../models/widget.model";
 })
 export class MainWidgetComponent implements OnInit, OnDestroy {
   weatherData: any;
-
   widgets: WidgetModel[] = [];
   currentCity = '';
   activeWidget = 0;
 
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private dataStorageService: DataStorageService) { }
+  constructor(private dataStorageService: DataStorageService) {
+  }
 
   ngOnInit(): void {
     this.dataStorageService.weatherDataChanged$
@@ -48,7 +48,7 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  public chooseActiveWidget(index: number) {
+  public chooseActiveWidget(index: number): void {
     this.dataStorageService.setGeneralInfoIndex = index;
     this.activeWidget = index;
   }

@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataStorageService} from "../../services/data-storage.service";
-import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataStorageService }           from '../../services/data-storage.service';
+import { takeUntil }                    from 'rxjs/operators';
+import { Subject }                      from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -17,9 +17,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private dataStorageService: DataStorageService) { }
+  constructor(private dataStorageService: DataStorageService) {
+  }
 
   ngOnInit(): void {
+    this.trackIsWeatherDataChanged$();
+  }
+
+  private trackIsWeatherDataChanged$(): void {
     this.dataStorageService.weatherDataChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe({

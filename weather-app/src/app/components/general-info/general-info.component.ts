@@ -1,8 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DataStorageService} from "../../services/data-storage.service";
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
-import {WidgetGeneralInfoModel} from "../../models/widget-general-info.model";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DataStorageService }           from '../../services/data-storage.service';
+import { Subject }                      from 'rxjs';
+import { takeUntil }                    from 'rxjs/operators';
+import { WidgetGeneralInfoModel }       from '../../models/widget-general-info.model';
 
 @Component({
   selector: 'app-general-info',
@@ -11,15 +11,19 @@ import {WidgetGeneralInfoModel} from "../../models/widget-general-info.model";
 })
 export class GeneralInfoComponent implements OnInit, OnDestroy {
   weatherData: any;
-
   generalInfo: WidgetGeneralInfoModel[] = [];
   generalInfoIndex = 0;
-
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private dataStorageService: DataStorageService) { }
+  constructor(private dataStorageService: DataStorageService) {
+  }
 
   ngOnInit(): void {
+    this.trackIsWeatherDataChanged$();
+    this.trackIsGeneralInfoIndexChanged$();
+  }
+
+  private trackIsWeatherDataChanged$(): void {
     this.dataStorageService.weatherDataChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
@@ -28,14 +32,14 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
           this.retrieveWeatherData();
         }
       });
+  }
 
+  private trackIsGeneralInfoIndexChanged$(): void {
     this.dataStorageService.generalInfoIndexChanged$
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (updatedIndex: number) => {
-          this.generalInfoIndex = updatedIndex;
-        }
-      })
+        next: (updatedIndex: number) => this.generalInfoIndex = updatedIndex
+      });
   }
 
   public retrieveWeatherData(): void {
@@ -60,5 +64,4 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

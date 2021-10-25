@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {WidgetModel} from "../../models/widget.model";
+import { Component, Input } from '@angular/core';
+import { WidgetModel }      from '../../models/widget.model';
 
 @Component({
   selector: 'app-widget',

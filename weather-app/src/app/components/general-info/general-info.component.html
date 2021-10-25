@@ -3,14 +3,14 @@
     <div class="general-info__day">
       <h4 class="general-info__24-title">Day</h4>
       <div class="general-info__text">
-        The day will stay {{generalInfo[generalInfoIndex]?.weatherText}}. The high temp will stay {{generalInfo[generalInfoIndex]?.maxTemp}} on this {{+generalInfo[generalInfoIndex]?.humidity > 50 ? 'humidity' : 'dry'}} day.
+        The day will stay {{generalInfo[generalInfoIndex]?.weatherText}}. The high temp will stay {{generalInfo[generalInfoIndex]?.maxTemp}}&deg;C on this {{+generalInfo[generalInfoIndex]?.humidity > 50 ? 'humidity' : 'dry'}} day.
       </div>
     </div>
 
     <div class="general-info__night">
       <h4 class="general-info__24-title">Night</h4>
       <div class="general-info__text">
-        {{+generalInfo[generalInfoIndex]?.chanceOfRain > 50 ? 'It is going to rain' : 'Without precipitation'}}. The low will be {{generalInfo[generalInfoIndex]?.minTemp}}.
+        {{+generalInfo[generalInfoIndex]?.chanceOfRain > 50 ? 'It is going to rain' : 'Without precipitation'}}. The low will be {{generalInfo[generalInfoIndex]?.minTemp}}&deg;C.
       </div>
     </div>
   </div>
