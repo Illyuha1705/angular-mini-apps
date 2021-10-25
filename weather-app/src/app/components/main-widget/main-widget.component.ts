@@ -32,7 +32,7 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
   }
 
   public retrieveWeatherData(): void {
-    this.widgets = [];
+    this.resetActiveWidgetAndWidgets();
     this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`;
 
     this.weatherData.forecast.forecastday.forEach(day => {
@@ -48,9 +48,15 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
     });
   }
 
-  chooseActiveWidget(index: number) {
+  public chooseActiveWidget(index: number) {
     this.dataStorageService.setGeneralInfoIndex = index;
     this.activeWidget = index;
+  }
+
+  public resetActiveWidgetAndWidgets(): void {
+    this.activeWidget = 0;
+    this.widgets = [];
+    this.chooseActiveWidget(0);
   }
 
   ngOnDestroy(): void {
