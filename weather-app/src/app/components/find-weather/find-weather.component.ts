@@ -39,7 +39,14 @@ export class FindWeatherComponent implements OnInit {
   public sentToApi(formValue: { location: string }): void {
     this.openWeatherMapService
       .getWeather(formValue.location)
-      .subscribe(data => this.dataStorageService.setWeatherData = data);
+      .subscribe(
+        data => {
+        this.dataStorageService.setWeatherData = data
+      },
+        error => {
+          alert(error.error.error.message);
+        }
+      );
   }
 
   public sentToLS(formValue: { location: string }): void {
