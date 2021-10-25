@@ -16,3 +16,18 @@
   justify-content: space-between;
   margin: 45px 0 20px 0;
 }
+
+.widget-active {
+  background-color: rgba(79, 34, 54, 0.6);
+  border-radius: 15px;
+  position: relative;
+  &:after {
+    content: '';
+    border: 20px solid transparent;
+    border-top: 20px solid rgba(79, 34, 54, 0.6);
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

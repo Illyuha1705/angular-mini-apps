@@ -12,10 +12,10 @@
 }
 
 .short-info__current-weather {
-  max-width: 50px;
-  max-height: 50px;
-  width: 50px;
-  height: 50px;
+  max-width: 70px;
+  max-height: 70px;
+  width: 70px;
+  height: 70px;
 
   .current-weather__img  {
     width: 100%;
@@ -26,19 +26,19 @@
 .short-info__temperature {
   color: white;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
   margin: 0 20px;
 }
 
 .short-info__weather-status {
   color: white;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .logo {
-  max-height: 60px;
-  max-width: 60px;
+  max-height: 80px;
+  max-width: 80px;
 
   img {
     width: 100%;

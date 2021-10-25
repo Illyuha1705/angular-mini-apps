@@ -5,6 +5,7 @@
       *ngFor="let widget of widgets; let i = index"
       [widget]="widget"
       (click)="chooseActiveWidget(i)"
+      [class.widget-active]="i == activeWidget"
     ></app-widget>
   </div>
 </div>

@@ -48,6 +48,9 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
           dayData.day.daily_chance_of_rain,
           dayData.day.maxwind_kph,
           dayData.day.avgvis_km,
+          dayData.day.maxtemp_c,
+          dayData.day.mintemp_c,
+          dayData.day.condition.text,
         )
       );
     });

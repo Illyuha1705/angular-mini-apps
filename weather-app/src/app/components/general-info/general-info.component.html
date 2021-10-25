@@ -3,14 +3,14 @@
     <div class="general-info__day">
       <h4 class="general-info__24-title">Day</h4>
       <div class="general-info__text">
-        The day will stay -. The high will stay - on this - day.
+        The day will stay {{generalInfo[generalInfoIndex]?.weatherText}}. The high temp will stay {{generalInfo[generalInfoIndex]?.maxTemp}} on this {{+generalInfo[generalInfoIndex]?.humidity > 50 ? 'humidity' : 'dry'}} day.
       </div>
     </div>
 
     <div class="general-info__night">
       <h4 class="general-info__24-title">Night</h4>
       <div class="general-info__text">
-        The day will stay -. The high will stay - on this - day.
+        {{+generalInfo[generalInfoIndex]?.chanceOfRain > 50 ? 'It is going to rain' : 'Without precipitation'}}. The low will be {{generalInfo[generalInfoIndex]?.minTemp}}.
       </div>
     </div>
   </div>
@@ -18,7 +18,7 @@
   <div class="general-info__data">
     <div class="block">
       <div class="block__img">
-        <img src="" alt="">
+        <img src="./assets/images/humidity.svg" alt="humidity img">
       </div>
       <div class="block__wrapper">
         <h4 class="block__title">Humidity</h4>
@@ -28,7 +28,7 @@
 
     <div class="block">
       <div class="block__img">
-        <img src="./assets/images/thermometer.svg" alt="thermometer">
+        <img src="" alt="">
       </div>
       <div class="block__wrapper">
         <h4 class="block__title">Chance of rain</h4>
@@ -38,7 +38,7 @@
 
     <div class="block">
       <div class="block__img">
-        <img src="" alt="">
+        <img src="./assets/images/wind.svg" alt="wind img">
       </div>
       <div class="block__wrapper">
         <h4 class="block__title">Max wind</h4>

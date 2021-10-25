@@ -10,11 +10,11 @@ import {WidgetModel} from "../../models/widget.model";
   styleUrls: ['./main-widget.component.scss']
 })
 export class MainWidgetComponent implements OnInit, OnDestroy {
-
   weatherData: any;
 
-  public widgets: WidgetModel[] = [];
+  widgets: WidgetModel[] = [];
   currentCity = '';
+  activeWidget = 0;
 
   private destroy$: Subject<void> = new Subject();
 
@@ -50,6 +50,7 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
 
   chooseActiveWidget(index: number) {
     this.dataStorageService.setGeneralInfoIndex = index;
+    this.activeWidget = index;
   }
 
   ngOnDestroy(): void {

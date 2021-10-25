@@ -6,12 +6,17 @@
   align-items: center;
 }
 
+.general-info__24 {
+  width: 35%;
+}
+
 .general-info__24-title {
-  margin: 0 0 5px 0;
+  font-size: 20px;
+  margin: 0 0 10px 0;
 }
 
 .general-info__text {
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 30px;
 }
 
@@ -28,10 +33,21 @@
   margin: 0 0 25px 0;
 }
 
+.block__img {
+  margin-right: 15px;
+  max-width: 30px;
+  max-height: 30px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .block__title {
+  font-size: 20px;
   margin: 0 0 10px 0;
 }
 
 .block__info {
-  font-size: 12px;
+  font-size: 14px;
 }
