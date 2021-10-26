@@ -11,6 +11,7 @@ import { OpenWeatherMapService } from '../../services/open-weather-map.service';
 import { DataStorageService }    from '../../services/data-storage.service';
 import { GeneralInfoComponent }  from '../general-info/general-info.component';
 import { BrowserModule }         from '@angular/platform-browser';
+import { ChartModule }           from '../chart/chart.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { BrowserModule }         from '@angular/platform-browser';
     WidgetComponent,
     GeneralInfoComponent,
   ],
-  imports: [ReactiveFormsModule, HttpClientModule, BrowserModule],
+  imports: [ReactiveFormsModule, HttpClientModule, BrowserModule, ChartModule],
   providers: [OpenWeatherMapService, DataStorageService],
   exports: [WeatherComponent],
 })
