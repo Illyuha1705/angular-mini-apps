@@ -1,49 +1,49 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataStorageService }           from '../../services/data-storage.service';
-import { takeUntil }                    from 'rxjs/operators';
-import { Subject }                      from 'rxjs';
+import { DataStorageService } from '../../services/data-storage.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { WeatherModel } from '../../models/weather.model';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  weatherData: any;
+    weatherData: WeatherModel;
 
-  currentWeather = '';
-  currentWeatherText = '';
-  currentWeatherImage = '';
+    currentWeather = '';
+    currentWeatherText = '';
+    currentWeatherImage = '';
 
-  private destroy$: Subject<void> = new Subject();
+    private destroy$: Subject<void> = new Subject();
 
-  constructor(private dataStorageService: DataStorageService) {
-  }
+    constructor(private dataStorageService: DataStorageService) {
+    }
 
-  ngOnInit(): void {
-    this.trackIsWeatherDataChanged$();
-  }
+    ngOnInit(): void {
+        this.trackIsWeatherDataChanged$();
+    }
 
-  private trackIsWeatherDataChanged$(): void {
-    this.dataStorageService.weatherDataChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (updatedWeatherData: any) => {
-          this.weatherData = updatedWeatherData;
-          this.retrieveWeatherData();
-        }
-      });
-  }
+    public retrieveWeatherData(): void {
+        this.currentWeather = this.weatherData.current.temp_c;
+        this.currentWeatherText = this.weatherData.current.condition.text;
+        this.currentWeatherImage = this.weatherData.current.condition.icon;
+    }
 
-  public retrieveWeatherData(): void {
-    this.currentWeather = this.weatherData.current.temp_c;
-    this.currentWeatherText = this.weatherData.current.condition.text;
-    this.currentWeatherImage = this.weatherData.current.condition.icon;
-  }
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
+    private trackIsWeatherDataChanged$(): void {
+        this.dataStorageService.weatherDataChanged$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (updatedWeatherData: any) => {
+                    this.weatherData = updatedWeatherData;
+                    this.retrieveWeatherData();
+                }
+            });
+    }
 }

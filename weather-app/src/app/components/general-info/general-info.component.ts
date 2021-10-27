@@ -1,67 +1,69 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataStorageService }           from '../../services/data-storage.service';
-import { Subject }                      from 'rxjs';
-import { takeUntil }                    from 'rxjs/operators';
-import { WidgetGeneralInfoModel }       from '../../models/widget-general-info.model';
+import { DataStorageService } from '../../services/data-storage.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { WidgetGeneralInfoModel } from '../../models/widget-general-info.model';
+import { WeatherModel } from '../../models/weather.model';
+import { ForecastDayModel } from '../../models/forecast-day.model';
 
 @Component({
-  selector: 'app-general-info',
-  templateUrl: './general-info.component.html',
-  styleUrls: ['./general-info.component.scss']
+    selector: 'app-general-info',
+    templateUrl: './general-info.component.html',
+    styleUrls: ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit, OnDestroy {
-  weatherData: any;
-  generalInfo: WidgetGeneralInfoModel[] = [];
-  generalInfoIndex = 0;
-  private destroy$: Subject<void> = new Subject();
+    weatherData: WeatherModel;
+    generalInfo: WidgetGeneralInfoModel[] = [];
+    generalInfoIndex = 0;
+    private destroy$: Subject<void> = new Subject();
 
-  constructor(private dataStorageService: DataStorageService) {
-  }
+    constructor(private dataStorageService: DataStorageService) {
+    }
 
-  ngOnInit(): void {
-    this.trackIsWeatherDataChanged$();
-    this.trackIsGeneralInfoIndexChanged$();
-  }
+    ngOnInit(): void {
+        this.trackIsWeatherDataChanged$();
+        this.trackIsGeneralInfoIndexChanged$();
+    }
 
-  private trackIsWeatherDataChanged$(): void {
-    this.dataStorageService.weatherDataChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (updatedWeatherData: any) => {
-          this.weatherData = updatedWeatherData;
-          this.retrieveWeatherData();
-        }
-      });
-  }
+    public retrieveWeatherData(): void {
+        this.generalInfo = [];
 
-  private trackIsGeneralInfoIndexChanged$(): void {
-    this.dataStorageService.generalInfoIndexChanged$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (updatedIndex: number) => this.generalInfoIndex = updatedIndex
-      });
-  }
+        this.weatherData.forecast.forecastday.forEach((dayData: ForecastDayModel) => {
+            this.generalInfo.push(
+                new WidgetGeneralInfoModel(
+                    dayData.day.avghumidity,
+                    dayData.day.daily_chance_of_rain,
+                    dayData.day.maxwind_kph,
+                    dayData.day.avgvis_km,
+                    dayData.day.maxtemp_c,
+                    dayData.day.mintemp_c,
+                    dayData.day.condition.text,
+                )
+            );
+        });
+    }
 
-  public retrieveWeatherData(): void {
-    this.generalInfo = [];
+    ngOnDestroy(): void {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
 
-    this.weatherData.forecast.forecastday.forEach(dayData => {
-      this.generalInfo.push(
-        new WidgetGeneralInfoModel(
-          dayData.day.avghumidity,
-          dayData.day.daily_chance_of_rain,
-          dayData.day.maxwind_kph,
-          dayData.day.avgvis_km,
-          dayData.day.maxtemp_c,
-          dayData.day.mintemp_c,
-          dayData.day.condition.text,
-        )
-      );
-    });
-  }
+    private trackIsWeatherDataChanged$(): void {
+        this.dataStorageService.weatherDataChanged$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (updatedWeatherData: WeatherModel) => {
+                    this.weatherData = updatedWeatherData;
+                    this.retrieveWeatherData();
+                }
+            });
+    }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+    private trackIsGeneralInfoIndexChanged$(): void {
+        this.dataStorageService.generalInfoIndexChanged$
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (updatedIndex: number) => this.generalInfoIndex = updatedIndex
+            });
+    }
 }

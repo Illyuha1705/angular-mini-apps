@@ -1,11 +1,12 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { WeatherModel } from '../models/weather.model';
 
 @Injectable()
 export class DataStorageService {
   @Output() weatherDataChanged$: EventEmitter<object> = new EventEmitter<object>();
   @Output() generalInfoIndexChanged$: EventEmitter<number> = new EventEmitter<number>();
 
-  private weatherData: {};
+  private weatherData: WeatherModel;
   private generalInfoIndex: number;
 
   private updateWeatherData(): void {
@@ -16,7 +17,7 @@ export class DataStorageService {
     this.generalInfoIndexChanged$.emit(this.generalInfoIndex);
   }
 
-  set setWeatherData(data) {
+  set setWeatherData(data: WeatherModel) {
     this.weatherData = data;
     this.updateWeatherData();
   }
