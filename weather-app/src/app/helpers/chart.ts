@@ -1,7 +1,6 @@
 import { Options } from 'highcharts';
 
 export const areaChartOptions = (hours: string[], temperatures: number[]): Options => {
-  console.log(hours)
   return {
     chart: {
       height: '300',
@@ -31,7 +30,7 @@ export const areaChartOptions = (hours: string[], temperatures: number[]): Optio
       name: '',
       data: temperatures,
       type: 'line',
-      color: '#6f2205',
+      color: 'orange',
       marker: {
         symbol: 'circle',
         width: 5,

@@ -1,4 +1,4 @@
-import { Component, OnInit }                  from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OpenWeatherMapService }              from '../../services/open-weather-map.service';
 import { DataStorageService }                 from '../../services/data-storage.service';
@@ -22,14 +22,14 @@ export class FindWeatherComponent implements OnInit {
 
   private initForm(): void {
     this.weatherSearchForm = new FormGroup({
-      'location': new FormControl('Kharkov, Ukraine', [Validators.required])
+      'location': new FormControl('Kharkiv, Ukraine', [Validators.required])
     });
   }
 
   private checkLSForLastCity(): void {
     const lastCity = localStorage.getItem('lastCity');
 
-    if (lastCity !== 'Kharkov, Ukraine' && lastCity !== null) {
+    if (lastCity !== 'Kharkiv, Ukraine' && lastCity !== null) {
       this.weatherSearchForm.controls['location'].setValue(lastCity);
     }
 
@@ -45,12 +45,13 @@ export class FindWeatherComponent implements OnInit {
       },
         error => {
           alert(error.error.error.message);
+          localStorage.clear();
         }
       );
   }
 
   public sentToLS(formValue: { location: string }): void {
-    localStorage.setItem('lastCity', formValue.location);
+      localStorage.setItem('lastCity', formValue.location);
   }
 
   public sentToApiAndToLS(formValue: { location: string }): void {

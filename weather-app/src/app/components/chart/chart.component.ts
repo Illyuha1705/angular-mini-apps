@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { Chart }                        from 'angular-highcharts';
 import { areaChartOptions }             from '../../helpers/chart';
 import { DataStorageService }           from '../../services/data-storage.service';
@@ -35,6 +35,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         next: (updatedWeatherData: any) => {
           this.weatherData = updatedWeatherData;
           this.retrieveWeatherData();
+          this.getHours();
           this.updateChart();
         }
       });
@@ -60,10 +61,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   private updateChart(): void {
-    const hours: string[] = this.getHours();
-    const temperatures: number[] = this.getTemp();
-
-    this.weatherChart.ref?.update(areaChartOptions(hours, temperatures), true);
+    this.weatherChart.ref?.update(areaChartOptions(this.getHours(),  this.getTemp()), true);
   }
 
   private static transformTimeData(str: string): string {
@@ -71,13 +69,19 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   private getTemp(): number[] {
-    return this.chartData[this.index]?.map(item => +Math.round(item.temp));
+    let temps: number[] = [];
+    this.chartData[this.index]?.map((item, index) => {
+      if (index % 2 !== 0) {
+        temps.push(+Math.round(item.temp));
+      }
+    });
+    return temps;
   }
 
   private getHours(): string[] {
     let times: string[] = [];
     this.chartData[this.index]?.forEach((item, index) => {
-      if (index % 2 === 0) {
+      if (index % 2 !== 0) {
         times.push(item.time);
       }
     });
