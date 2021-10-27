@@ -7,3 +7,35 @@ body {
   background: url("./assets/images/background.jpg") no-repeat center center/cover;
   font-family: sans-serif;
 }
+
+.highcharts-title {
+  display: none;
+}
+
+.highcharts-axis-title {
+  display: none;
+}
+
+.highcharts-yaxis-labels {
+  opacity: 0;
+}
+
+g.highcharts-axis, g.highcharts-xaxis {
+
+}
+
+.highcharts-grid-line {
+  display: none;
+}
+
+g.highcharts-legend-item {
+  display: none;
+}
+
+rect.highcharts-background {
+  opacity: 0;
+}
+
+.highcharts-credits {
+  display: none;
+}

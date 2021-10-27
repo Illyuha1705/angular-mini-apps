@@ -16,23 +16,13 @@ export class DataStorageService {
     this.generalInfoIndexChanged$.emit(this.generalInfoIndex);
   }
 
-  get getWeatherData() {
-    return this.weatherData;
-  }
-
   set setWeatherData(data) {
     this.weatherData = data;
     this.updateWeatherData();
-  }
-
-  get getGeneralInfoIndex(): number {
-    return this.generalInfoIndex;
   }
 
   set setGeneralInfoIndex(index: number) {
     this.generalInfoIndex = index;
     this.updateGeneralInfoIndex();
   }
-
-
 }

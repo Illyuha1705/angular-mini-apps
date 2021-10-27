@@ -1,42 +1,42 @@
 import { Options } from 'highcharts';
 
-export const areaChartOptions = (): Options => ({
-  chart: {
-    height: '400',
-    width: '1075',
-  },
-
-  xAxis: {
-    labels: {
-      step: 0,
+export const areaChartOptions = (hours: string[], temperatures: number[]): Options => {
+  console.log(hours)
+  return {
+    chart: {
+      height: '300',
+      width: '1075',
     },
-  },
 
-  yAxis: {
-    labels: {
-      step: 1,
+    xAxis: {
+      categories: hours,
     },
-    max: 60,
-  },
 
-  plotOptions: {
-    series: {
-      label: {
-        connectorAllowed: false,
+    yAxis: {
+      labels: {
+        step: 1,
       },
-      pointStart: 0,
     },
-  },
 
-  series: [{
-    name: 'stuffiness',
-    data: [],
-    type: 'line',
-    color: '#6f2205',
-    marker: {
-      symbol: 'circle',
-      width: 5,
-      height: 5,
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false,
+        },
+        pointStart: 0,
+      },
     },
-  }],
-});
+
+    series: [{
+      name: '',
+      data: temperatures,
+      type: 'line',
+      color: '#6f2205',
+      marker: {
+        symbol: 'circle',
+        width: 5,
+        height: 5,
+      },
+    }],
+  }
+};
