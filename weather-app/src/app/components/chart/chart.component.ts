@@ -25,7 +25,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.trackIsWeatherDataChanged();
     this.trackIsGeneralInfoIndexChanged$();
 
-    this.updateChart();
+    this.setChart();
   }
 
   private trackIsWeatherDataChanged(): void {
@@ -35,7 +35,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         next: (updatedWeatherData: any) => {
           this.weatherData = updatedWeatherData;
           this.retrieveWeatherData();
-          this.setChart();
+          this.updateChart();
         }
       });
   }
@@ -45,8 +45,8 @@ export class ChartComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (updatedIndex: number) => {
-          this.index = updatedIndex
-
+          this.index = updatedIndex;
+          this.updateChart();
         }
       });
   }
@@ -60,11 +60,13 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   private updateChart(): void {
-    this.weatherChart.ref.update(areaChartOptions(this.getHours(), this.getTemp()));
-    console.log(1)
+    const hours: string[] = this.getHours();
+    const temperatures: number[] = this.getTemp();
+
+    this.weatherChart.ref?.update(areaChartOptions(hours, temperatures), true);
   }
 
-  private sliceTimeData(str): string {
+  private static transformTimeData(str: string): string {
     return str.substring(str.indexOf(' '));
   }
 
@@ -87,7 +89,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.chartData = this.weatherData.forecast.forecastday.map(day => {
       return day.hour.map(hour => {
         return {
-          time: this.sliceTimeData(hour.time),
+          time: ChartComponent.transformTimeData(hour.time),
           temp: hour.temp_c
         }
       });
