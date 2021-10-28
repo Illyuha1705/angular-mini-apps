@@ -3,8 +3,8 @@ import { DataStorageService } from '../../services/data-storage.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { WidgetModel } from '../../models/widget.model';
-import { WeatherModel } from '../../models/weather.model';
-import { ForecastDayModel } from '../../models/forecast-day.model';
+import { WeatherInterface } from '../../interfaces/weather.interface';
+import { ForecastDayInterface } from '../../interfaces/forecast-day.interface';
 
 @Component({
     selector: 'app-main-widget',
@@ -12,7 +12,6 @@ import { ForecastDayModel } from '../../models/forecast-day.model';
     styleUrls: ['./main-widget.component.scss']
 })
 export class MainWidgetComponent implements OnInit, OnDestroy {
-    weatherData: WeatherModel;
     widgets: WidgetModel[] = [];
     currentCity = '';
     activeWidget = 0;
@@ -26,11 +25,11 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
         this.trackIsWeatherDataChanged$();
     }
 
-    public retrieveWeatherData(): void {
+    retrieveWeatherData(updatedWeatherData): void {
         this.resetActiveWidgetAndWidgets();
-        this.currentCity = `${this.weatherData?.location.name}, ${this.weatherData?.location.country}`;
+        this.currentCity = `${updatedWeatherData?.location.name}, ${updatedWeatherData?.location.country}`;
 
-        this.weatherData.forecast.forecastday.forEach((day: ForecastDayModel) => {
+        updatedWeatherData.forecast.forecastday.forEach((day: ForecastDayInterface) => {
             this.widgets.push(
                 new WidgetModel(
                     day.date,
@@ -43,12 +42,12 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
         });
     }
 
-    public chooseActiveWidget(index: number): void {
+    chooseActiveWidget(index: number): void {
         this.dataStorageService.setGeneralInfoIndex = index;
         this.activeWidget = index;
     }
 
-    public resetActiveWidgetAndWidgets(): void {
+    resetActiveWidgetAndWidgets(): void {
         this.activeWidget = 0;
         this.widgets = [];
         this.chooseActiveWidget(0);
@@ -63,9 +62,8 @@ export class MainWidgetComponent implements OnInit, OnDestroy {
         this.dataStorageService.weatherDataChanged$
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (updatedWeatherData: WeatherModel) => {
-                    this.weatherData = updatedWeatherData;
-                    this.retrieveWeatherData();
+                next: (updatedWeatherData: WeatherInterface) => {
+                    this.retrieveWeatherData(updatedWeatherData);
                 }
             });
     }

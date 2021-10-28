@@ -3,8 +3,8 @@ import { DataStorageService } from '../../services/data-storage.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WidgetGeneralInfoModel } from '../../models/widget-general-info.model';
-import { WeatherModel } from '../../models/weather.model';
-import { ForecastDayModel } from '../../models/forecast-day.model';
+import { WeatherInterface } from '../../interfaces/weather.interface';
+import { ForecastDayInterface } from '../../interfaces/forecast-day.interface';
 
 @Component({
     selector: 'app-general-info',
@@ -12,7 +12,6 @@ import { ForecastDayModel } from '../../models/forecast-day.model';
     styleUrls: ['./general-info.component.scss']
 })
 export class GeneralInfoComponent implements OnInit, OnDestroy {
-    weatherData: WeatherModel;
     generalInfo: WidgetGeneralInfoModel[] = [];
     generalInfoIndex = 0;
     private destroy$: Subject<void> = new Subject();
@@ -25,10 +24,10 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
         this.trackIsGeneralInfoIndexChanged$();
     }
 
-    public retrieveWeatherData(): void {
+    retrieveWeatherData(updatedWeatherData): void {
         this.generalInfo = [];
 
-        this.weatherData.forecast.forecastday.forEach((dayData: ForecastDayModel) => {
+        updatedWeatherData.forecast.forecastday.forEach((dayData: ForecastDayInterface) => {
             this.generalInfo.push(
                 new WidgetGeneralInfoModel(
                     dayData.day.avghumidity,
@@ -52,9 +51,8 @@ export class GeneralInfoComponent implements OnInit, OnDestroy {
         this.dataStorageService.weatherDataChanged$
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (updatedWeatherData: WeatherModel) => {
-                    this.weatherData = updatedWeatherData;
-                    this.retrieveWeatherData();
+                next: (updatedWeatherData: WeatherInterface) => {
+                    this.retrieveWeatherData(updatedWeatherData);
                 }
             });
     }

@@ -4,7 +4,8 @@ import { areaChartOptions } from '../../helpers/chart';
 import { DataStorageService } from '../../services/data-storage.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { WeatherModel } from '../../models/weather.model';
+import { WeatherInterface } from '../../interfaces/weather.interface';
+import { ForecastDayInterface } from '../../interfaces/forecast-day.interface';
 
 @Component({
     selector: 'app-chart',
@@ -14,7 +15,6 @@ import { WeatherModel } from '../../models/weather.model';
 export class ChartComponent implements OnInit, OnDestroy {
     weatherChart: Chart;
     chartData = [];
-    weatherData: WeatherModel;
     index = 0;
 
     private destroy$: Subject<void> = new Subject();
@@ -22,27 +22,21 @@ export class ChartComponent implements OnInit, OnDestroy {
     constructor(private dataStorageService: DataStorageService) {
     }
 
-    private static transformTimeData(str: string): string {
-        return str.substring(str.indexOf(' '));
-    }
-
     ngOnInit(): void {
-        console.log(this.weatherData)
         this.trackIsWeatherDataChanged();
         this.trackIsGeneralInfoIndexChanged$();
 
         this.setChart();
     }
 
-    public retrieveWeatherData(): void {
-        this.chartData = this.weatherData.forecast.forecastday.map(day => {
-            return day.hour.map(hour => {
+     retrieveWeatherData(updatedWeatherData: WeatherInterface): void {
+         this.chartData = updatedWeatherData.forecast.forecastday.map((day: ForecastDayInterface) => day.hour.map((hour: { temp_c: string, time: string }) => {
                 return {
-                    time: ChartComponent.transformTimeData(hour.time),
+                    time: this.transformTimeData(hour.time),
                     temp: hour.temp_c
                 }
-            });
-        });
+            })
+        );
     }
 
     ngOnDestroy(): void {
@@ -54,10 +48,8 @@ export class ChartComponent implements OnInit, OnDestroy {
         this.dataStorageService.weatherDataChanged$
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (updatedWeatherData: WeatherModel) => {
-                    this.weatherData = updatedWeatherData;
-                    this.retrieveWeatherData();
-                    this.getHours();
+                next: (updatedWeatherData: WeatherInterface) => {
+                    this.retrieveWeatherData(updatedWeatherData);
                     this.updateChart();
                 }
             });
@@ -88,7 +80,7 @@ export class ChartComponent implements OnInit, OnDestroy {
 
     private getTemp(): number[] {
         let temps: number[] = [];
-        this.chartData[this.index]?.map((item, index) => {
+        this.chartData[this.index]?.forEach((item, index) => {
             if (index % 2 !== 0) {
                 temps.push(+Math.round(item.temp));
             }
@@ -105,5 +97,9 @@ export class ChartComponent implements OnInit, OnDestroy {
         });
 
         return times;
+    }
+
+    private transformTimeData(str: string): string {
+        return str.substring(str.indexOf(' '));
     }
 }

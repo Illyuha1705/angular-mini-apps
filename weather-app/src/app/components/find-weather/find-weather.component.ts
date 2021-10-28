@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GetWeatherDataService } from '../../services/get-weather-data.service';
 import { DataStorageService } from '../../services/data-storage.service';
-import { WeatherModel } from '../../models/weather.model';
 import { Subject } from 'rxjs';
+import { WeatherInterface } from '../../interfaces/weather.interface';
 
 @Component({
     selector: 'app-find-weather',
@@ -19,31 +19,34 @@ export class FindWeatherComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.initForm()
-        this.checkLSForLastCity();
+        this.initForm();
+        this.sentToApi(this.weatherSearchForm.value);
+
+        this.dataStorageService.weatherDataChanged$.subscribe((weatherData: { location }) => {
+            if (weatherData) {
+                this.weatherSearchForm.controls['location'].setValue(`${weatherData.location.name} ${weatherData.location.country}`);
+            }
+        });
     }
 
-    public sentToApi(formValue: { location: string }): void {
+    sentToApi(formValue: { location: string }): void {
         this.openWeatherMapService
             .getWeather(formValue.location)
-            .subscribe(
-                (data: WeatherModel) => {
-                    this.dataStorageService.setWeatherData = data
-                },
-                error => {
-                    alert(error.error.error.message);
-                    localStorage.clear();
+            .subscribe({
+                    next: (updatedWeatherData: WeatherInterface) => {
+                        this.dataStorageService.setWeatherData = updatedWeatherData;
+                    },
+                    error: (error) => {
+                        localStorage.clear();
+                        alert(error.error.error.message);
+                    }
                 }
             );
     }
 
-    public sentToLS(formValue: { location: string }): void {
-        localStorage.setItem('lastCity', formValue.location);
-    }
-
-    public sentToApiAndToLS(formValue: { location: string }): void {
+    sentToApiAndToLS(formValue: { location: string }): void {
         this.sentToApi(formValue);
-        this.sentToLS(formValue);
+        localStorage.setItem('lastCity', this.weatherSearchForm.value.location);
     }
 
     ngOnDestroy(): void {
@@ -52,18 +55,11 @@ export class FindWeatherComponent implements OnInit, OnDestroy {
     }
 
     private initForm(): void {
+        const defaultCity = localStorage.getItem('lastCity') || 'Kharkiv, Ukraine';
+
         this.weatherSearchForm = new FormGroup({
-            'location': new FormControl('Kharkiv, Ukraine', [Validators.required])
+            'location': new FormControl(defaultCity, [Validators.required])
         });
-    }
 
-    private checkLSForLastCity(): void {
-        const lastCity = localStorage.getItem('lastCity');
-
-        if (lastCity !== 'Kharkiv, Ukraine' && lastCity !== null) {
-            this.weatherSearchForm.controls['location'].setValue(lastCity);
-        }
-
-        this.sentToApiAndToLS(this.weatherSearchForm.value);
     }
 }

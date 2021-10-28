@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataStorageService } from '../../services/data-storage.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { WeatherModel } from '../../models/weather.model';
+import { WeatherInterface } from '../../interfaces/weather.interface';
 
 @Component({
     selector: 'app-header',
@@ -10,8 +10,6 @@ import { WeatherModel } from '../../models/weather.model';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    weatherData: WeatherModel;
-
     currentWeather = '';
     currentWeatherText = '';
     currentWeatherImage = '';
@@ -25,10 +23,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.trackIsWeatherDataChanged$();
     }
 
-    public retrieveWeatherData(): void {
-        this.currentWeather = this.weatherData.current.temp_c;
-        this.currentWeatherText = this.weatherData.current.condition.text;
-        this.currentWeatherImage = this.weatherData.current.condition.icon;
+    retrieveWeatherData(updatedWeatherData): void {
+        this.currentWeather = updatedWeatherData.current.temp_c;
+        this.currentWeatherText = updatedWeatherData.current.condition.text;
+        this.currentWeatherImage = updatedWeatherData.current.condition.icon;
     }
 
     ngOnDestroy(): void {
@@ -40,9 +38,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.dataStorageService.weatherDataChanged$
             .pipe(takeUntil(this.destroy$))
             .subscribe({
-                next: (updatedWeatherData: any) => {
-                    this.weatherData = updatedWeatherData;
-                    this.retrieveWeatherData();
+                next: (updatedWeatherData: WeatherInterface) => {
+                    this.retrieveWeatherData(updatedWeatherData);
                 }
             });
     }
