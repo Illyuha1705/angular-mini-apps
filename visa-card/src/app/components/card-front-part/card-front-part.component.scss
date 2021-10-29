@@ -1,0 +1,83 @@
+.card-front-part {
+  width: 535px;
+  height: 343px;
+  border: 1px solid grey;
+  border-radius: 15px;
+  position: relative;
+  background: green;
+  padding: 15px 55px;
+  z-index: 100;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  max-width: 60px;
+  max-height: 60px;
+  height: 60px;
+  width: 60px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.header__title {
+  color: white;
+  font-weight: 700;
+  margin: 0 0 0 10px;
+  border-bottom: 2px solid white;
+}
+
+.card-front-part__number {
+  margin: 25px 0;
+  width: 100%;
+  padding: 5px 15px;
+  font-size: 28px;
+  border: none;
+  outline: none;
+}
+
+.card-front-part__label {
+  display: block;
+  color: white;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.card-front-part__info {
+  display: flex;
+  align-items: center;
+}
+
+.card-front-part__input-month, .card-front-part__input-year {
+  width: 60px;
+  font-size: 28px;
+  outline: none;
+  border: none;
+  text-align: center;
+  padding: 5px;
+  background: white;
+  margin: 10px 10px 0 0;
+}
+
+.card-front-part__img {
+  margin: 0 0 0 50%;
+  height: 50px;
+  width: 50px;
+
+  img {
+    max-width: 50px;
+    max-height: 50px;
+    height: 50px;
+    width: 50px;
+  }
+}
+
+.not-used {
+  display: none;
+}
