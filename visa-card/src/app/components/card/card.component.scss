@@ -40,7 +40,7 @@
 }
 
 .card-number {
-  margin: 25px 0 35px;
+  margin: 25px 0 45px;
   position: relative;
 }
 
@@ -59,16 +59,23 @@
   border: 1px solid red;
 }
 
-.card-front-part__label {
+.card-front-part__info {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.card-front-part__title {
+  position: absolute;
   display: block;
   color: white;
   font-size: 18px;
   font-family: sans-serif;
+  top: -20px;
 }
 
-.card-front-part__info {
+.card-front-part__inputs {
   display: flex;
-  align-items: center;
 }
 
 .card-front-part__input-month, .card-front-part__input-year {
@@ -79,7 +86,7 @@
   text-align: center;
   padding: 5px;
   background: white;
-  margin: 10px 10px 0 0;
+  margin: 10px 25px 0 0;
 }
 
 .card-front-part__img {
@@ -142,6 +149,10 @@
   border: none;
   background: orange;
   cursor: pointer;
+}
+
+.form-group {
+  position: relative;
 }
 
 .help-block {

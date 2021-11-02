@@ -26,36 +26,42 @@
                 </div>
 
                 <div class="card-front-part__info">
-                    <div class="card-front-part__inputs">
-                        <label class="card-front-part__label" for="month-input">Действует до</label>
-                        <input
-                            [inputLength]="2"
-                            class="card-front-part__input-month"
-                            formControlName="cardMonth"
-                            id="month-input"
-                            numbersOnly
-                            placeholder="MM"
-                            type="text">
-                        <span
-                            *ngIf="cardForm.controls['cardMonth'].invalid
-                            && cardForm.controls['cardMonth'].touched"
-                            class="help-block"
-                        >Two digits are needed</span>
+                    <span class="card-front-part__title">Действует до</span>
 
-                        <label class="card-front-part__label not-used" for="year-input"></label>
-                        <input
-                            [inputLength]="2"
-                            class="card-front-part__input-year"
-                            formControlName="cardYear"
-                            id="year-input"
-                            numbersOnly
-                            placeholder="YY"
-                            type="text">
-                        <span
-                            *ngIf="cardForm.controls['cardMonth'].invalid
+                    <div class="card-front-part__inputs">
+                        <div class="form-group">
+                            <label class="card-front-part__label not-used" for="month-input"></label>
+                            <input
+                                    [inputLength]="2"
+                                    class="card-front-part__input-month"
+                                    formControlName="cardMonth"
+                                    id="month-input"
+                                    numbersOnly
+                                    placeholder="MM"
+                                    type="text">
+                            <span
+                                    *ngIf="cardForm.controls['cardMonth'].invalid
                             && cardForm.controls['cardMonth'].touched"
-                            class="help-block"
-                        >Two digits are needed</span>
+                                    class="help-block"
+                            >Two digits are needed</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="card-front-part__label not-used" for="year-input"></label>
+                            <input
+                                    [inputLength]="2"
+                                    class="card-front-part__input-year"
+                                    formControlName="cardYear"
+                                    id="year-input"
+                                    numbersOnly
+                                    placeholder="YY"
+                                    type="text">
+                            <span
+                                    *ngIf="cardForm.controls['cardMonth'].invalid
+                            && cardForm.controls['cardYear'].touched"
+                                    class="help-block"
+                            >Two digits are needed</span>
+                        </div>
                     </div>
 
                     <div class="card-front-part__img">
@@ -66,20 +72,22 @@
 
             <div class="card-back-part">
                 <div class="card-back-part__line"></div>
-                <label class="card-back-part__label not-used" for="cvv"></label>
-                <input
-                    [inputLength]="3"
-                    class="card-back-part__input"
-                    formControlName="cardCvv"
-                    id="cvv"
-                    numbersOnly
-                    placeholder="CVV"
-                    type="text">
-                <span
-                    *ngIf="cardForm.controls['cardMonth'].invalid
+                <div class="form-group card-back-part__form-group">
+                    <label class="card-back-part__label not-used" for="cvv"></label>
+                    <input
+                            [inputLength]="3"
+                            class="card-back-part__input"
+                            formControlName="cardCvv"
+                            id="cvv"
+                            numbersOnly
+                            placeholder="CVV"
+                            type="text">
+                    <span
+                            *ngIf="cardForm.controls['cardMonth'].invalid
                     && cardForm.controls['cardMonth'].touched"
-                    class="help-block"
-                >Three digits are needed</span>
+                            class="help-block"
+                    >Three digits are needed</span>
+                </div>
             </div>
         </div>
 
