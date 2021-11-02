@@ -3,3 +3,156 @@
   height: 381px;
   position: relative;
 }
+
+.card-front-part {
+  width: 535px;
+  height: 343px;
+  border: 1px solid grey;
+  border-radius: 15px;
+  position: relative;
+  background: green;
+  padding: 15px 55px;
+  z-index: 100;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  max-width: 60px;
+  max-height: 60px;
+  height: 60px;
+  width: 60px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.header__title {
+  color: white;
+  font-weight: 700;
+  margin: 0 0 0 10px;
+  border-bottom: 2px solid white;
+}
+
+.card-number {
+  margin: 25px 0 35px;
+  position: relative;
+}
+
+.card-number__input {
+  width: 100%;
+  padding: 5px 15px;
+  font-size: 28px;
+  border: none;
+  outline: none;
+}
+
+.card-number__input.ng-invalid.ng-touched,
+.card-front-part__input-month.ng-invalid.ng-touched,
+.card-front-part__input-year.ng-invalid.ng-touched,
+.card-back-part__input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.card-front-part__label {
+  display: block;
+  color: white;
+  font-size: 18px;
+  font-family: sans-serif;
+}
+
+.card-front-part__info {
+  display: flex;
+  align-items: center;
+}
+
+.card-front-part__input-month, .card-front-part__input-year {
+  width: 60px;
+  font-size: 28px;
+  outline: none;
+  border: none;
+  text-align: center;
+  padding: 5px;
+  background: white;
+  margin: 10px 10px 0 0;
+}
+
+.card-front-part__img {
+  margin: 0 0 0 50%;
+  height: 50px;
+  width: 50px;
+
+  img {
+    max-width: 50px;
+    max-height: 50px;
+    height: 50px;
+    width: 50px;
+  }
+}
+
+.card-back-part {
+  width: 535px;
+  height: 343px;
+  border: 1px solid grey;
+  border-radius: 15px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: #ececec;
+}
+
+.card-back-part__line {
+  width: 100%;
+  height: 80px;
+  background: gray;
+  position: absolute;
+  top: 50px;
+}
+
+.card-back-part__input {
+  position: absolute;
+  right: 40px;
+  bottom: 112px;
+  width: 100px;
+  padding: 5px;
+  font-size: 28px;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.checkbox {
+  margin: 50px 0 15px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button__btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-weight: 700;
+  color: blueviolet;
+  border: none;
+  background: orange;
+  cursor: pointer;
+}
+
+.help-block {
+  position: absolute;
+  font-weight: 700;
+  color: red;
+  font-size: 14px;
+  bottom: -23px;
+  left: 0;
+}
+
+.not-used {
+  display: none;
+}
