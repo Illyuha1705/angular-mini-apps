@@ -16,7 +16,6 @@ export class CardComponent implements OnInit {
 
     sentForm(): void {
         console.log(this.cardForm.value);
-        this.sentCardDataToLs();
     }
 
     toggleSaveCardData(): void {

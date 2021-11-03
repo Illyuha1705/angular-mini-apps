@@ -1,4 +1,4 @@
-<div class="card">
+<section class="card">
     <form (ngSubmit)="sentForm()" [formGroup]="cardForm" class="card__form">
         <div class="card__front-part front-part">
             <header class="header">
@@ -9,12 +9,12 @@
             </header>
 
             <div class="card__number">
-                <label class="card-number__label not-used" for="card-number"></label>
+                <label class="card__number-label not-used" for="card__number"></label>
                 <input
                     [inputLength]="19"
                     class="card__number-input"
                     formControlName="cardNumber"
-                    id="card-number"
+                    id="card__number"
                     numbersOnly
                     type="text">
                 <span
@@ -70,7 +70,6 @@
         </div>
 
         <div class="card__back-part">
-            <div class="card__back-part back-part__line"></div>
             <div class="form-group back-part__form-group">
                 <label class="back-part__label not-used" for="cvv"></label>
                 <input
@@ -105,11 +104,12 @@
         </div>
 
         <div class="card__button-wrapper">
-            <button class="card__button"
-                    type="submit"
-                    [disabled]="!cardForm.valid"
-            >Оплатить
-            </button>
+            <button
+                class="card__button"
+                type="submit"
+                (click)="sentCardDataToLs()"
+                [disabled]="!cardForm.valid"
+            >Оплатить</button>
         </div>
     </form>
-</div>
+</section>
