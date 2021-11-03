@@ -1,115 +1,113 @@
 <div class="card">
-    <form (ngSubmit)="sentForm()" [formGroup]="cardForm" class="visa-card__container">
-        <div class="visa-card__wrapper">
-            <div class="card-front-part">
-                <header class="header">
-                    <div class="header__logo">
-                        <img alt="Visa-card logotype" src="">
-                    </div>
-                    <h2 class="header__title">Сбербанк</h2>
-                </header>
-
-                <div class="card-number">
-                    <label class="card-number__label not-used" for="card-number"></label>
-                    <input
-                        [inputLength]="19"
-                        class="card-number__input"
-                        formControlName="cardNumber"
-                        id="card-number"
-                        numbersOnly
-                        type="text">
-                    <span
-                        *ngIf="cardForm.controls['cardNumber'].invalid
-                        && cardForm.controls['cardNumber'].touched"
-                        class="help-block"
-                    >Number must have 12 digits</span>
+    <form (ngSubmit)="sentForm()" [formGroup]="cardForm" class="card__form">
+        <div class="card__front-part front-part">
+            <header class="header">
+                <div class="header__logo">
+                    <img alt="Visa-card logotype" src="">
                 </div>
+                <h2 class="header__title">Сбербанк</h2>
+            </header>
 
-                <div class="card-front-part__info">
-                    <span class="card-front-part__title">Действует до</span>
-
-                    <div class="card-front-part__inputs">
-                        <div class="form-group">
-                            <label class="card-front-part__label not-used" for="month-input"></label>
-                            <input
-                                    [inputLength]="2"
-                                    class="card-front-part__input-month"
-                                    formControlName="cardMonth"
-                                    id="month-input"
-                                    numbersOnly
-                                    placeholder="MM"
-                                    type="text">
-                            <span
-                                    *ngIf="cardForm.controls['cardMonth'].invalid
-                            && cardForm.controls['cardMonth'].touched"
-                                    class="help-block"
-                            >Two digits are needed</span>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="card-front-part__label not-used" for="year-input"></label>
-                            <input
-                                    [inputLength]="2"
-                                    class="card-front-part__input-year"
-                                    formControlName="cardYear"
-                                    id="year-input"
-                                    numbersOnly
-                                    placeholder="YY"
-                                    type="text">
-                            <span
-                                    *ngIf="cardForm.controls['cardMonth'].invalid
-                            && cardForm.controls['cardYear'].touched"
-                                    class="help-block"
-                            >Two digits are needed</span>
-                        </div>
-                    </div>
-
-                    <div class="card-front-part__img">
-                        <img alt="Visa image" src="">
-                    </div>
-                </div>
+            <div class="card__number">
+                <label class="card-number__label not-used" for="card-number"></label>
+                <input
+                    [inputLength]="19"
+                    class="card__number-input"
+                    formControlName="cardNumber"
+                    id="card-number"
+                    numbersOnly
+                    type="text">
+                <span
+                    *ngIf="cardForm.controls['cardNumber'].invalid
+                    && cardForm.controls['cardNumber'].touched"
+                    class="card__help-block"
+                >Number must have 12 digits</span>
             </div>
 
-            <div class="card-back-part">
-                <div class="card-back-part__line"></div>
-                <div class="form-group card-back-part__form-group">
-                    <label class="card-back-part__label not-used" for="cvv"></label>
-                    <input
-                            [inputLength]="3"
-                            class="card-back-part__input"
-                            formControlName="cardCvv"
-                            id="cvv"
+            <div class="front-part__info">
+                <h4 class="front-part__info-title">Действует до</h4>
+
+                <div class="front-part__info-inputs">
+                    <div class="form-group">
+                        <label class="front-part__info-label not-used" for="month-input"></label>
+                        <input
+                            [inputLength]="2"
+                            class="front-part__info-input input-month"
+                            formControlName="cardMonth"
+                            id="month-input"
                             numbersOnly
-                            placeholder="CVV"
+                            placeholder="MM"
                             type="text">
-                    <span
+                        <span
                             *ngIf="cardForm.controls['cardMonth'].invalid
-                    && cardForm.controls['cardMonth'].touched"
-                            class="help-block"
-                    >Three digits are needed</span>
+                            && cardForm.controls['cardMonth'].touched"
+                            class="card__help-block"
+                        >Two digits are needed</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="front-part__info-label not-used" for="year-input"></label>
+                        <input
+                            [inputLength]="2"
+                            class="front-part__info-input input-year"
+                            formControlName="cardYear"
+                            id="year-input"
+                            numbersOnly
+                            placeholder="YY"
+                            type="text">
+                        <span
+                            *ngIf="cardForm.controls['cardYear'].invalid
+                            && cardForm.controls['cardYear'].touched"
+                            class="card__help-block"
+                        >Two digits are needed</span>
+                    </div>
+                </div>
+
+                <div class="card__front-part-img">
+                    <img alt="Visa image" src="">
                 </div>
             </div>
         </div>
 
-        <div class="checkbox">
+        <div class="card__back-part">
+            <div class="card__back-part back-part__line"></div>
+            <div class="form-group back-part__form-group">
+                <label class="back-part__label not-used" for="cvv"></label>
+                <input
+                    [inputLength]="3"
+                    class="back-part__input"
+                    formControlName="cardCvv"
+                    id="cvv"
+                    numbersOnly
+                    placeholder="CVV"
+                    type="text">
+                <span
+                    *ngIf="cardForm.controls['cardCvv'].invalid
+                    && cardForm.controls['cardCvv'].touched"
+                    class="card__help-block"
+                >Three digits are needed</span>
+            </div>
+        </div>
+
+        <div class="card__checkbox">
             <input
-                    (click)="toggleSaveCardData()"
-                    [checked]="saveCardData"
-                    class="checkbox__input"
-                    id="save-data"
-                    type="checkbox"
-            >
-            <label class="checkbox__label" for="save-data">
-            <span
-                    class="checkbox__custom-label">
+                (click)="toggleSaveCardData()"
+                [checked]="saveCardData"
+                class="card__checkbox-input"
+                id="save-data"
+                type="checkbox">
+            <label class="card__checkbox-label" for="save-data">
+                <span
+                    class="card__checkbox-text">
                     Сохранить карту для последущих платежей
-            </span>
+                </span>
             </label>
         </div>
 
-        <div class="button__wrapper">
-            <button class="button__btn"
+        <div class="card__button-wrapper">
+            <button class="card__button"
                     type="submit"
+                    [disabled]="!cardForm.valid"
             >Оплатить
             </button>
         </div>

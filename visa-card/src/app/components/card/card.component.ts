@@ -19,16 +19,6 @@ export class CardComponent implements OnInit {
         this.sentCardDataToLs();
     }
 
-    private initForm(): void {
-        const cardNumber = JSON.parse(localStorage.getItem('card-data')) || null;
-        this.cardForm = new FormGroup({
-             'cardNumber': new FormControl( cardNumber?.cardNumber || '', [Validators.required, Validators.minLength(19)]),
-             'cardMonth': new FormControl(cardNumber?.cardMonth || '', [Validators.required, Validators.maxLength(2)]),
-             'cardYear': new FormControl(cardNumber?.cardYear || '', [Validators.required, Validators.maxLength(2)]),
-            'cardCvv': new FormControl(cardNumber?.cardCvv || '', [Validators.required]),
-        });
-    }
-
     toggleSaveCardData(): void {
         this.saveCardData = !this.saveCardData;
     }
@@ -41,5 +31,15 @@ export class CardComponent implements OnInit {
             localStorage.clear();
             this.cardForm.reset();
         }
+    }
+
+    private initForm(): void {
+        const cardNumber = JSON.parse(localStorage.getItem('card-data')) || null;
+        this.cardForm = new FormGroup({
+            'cardNumber': new FormControl( cardNumber?.cardNumber.substring(0, 19) || '', [Validators.required, Validators.minLength(19)]),
+            'cardMonth': new FormControl(cardNumber?.cardMonth.substring(0, 2) || '', [Validators.required, Validators.minLength(2)]),
+            'cardYear': new FormControl(cardNumber?.cardYear.substring(0, 2) || '', [Validators.required, Validators.minLength(2)]),
+            'cardCvv': new FormControl(cardNumber?.cardCvv.substring(0, 3) || '', [Validators.required]),
+        });
     }
 }
