@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
         NumbersOnly,
     ],
     imports: [ReactiveFormsModule, CommonModule],
-    providers: [],
     exports: [CardComponent]
 })
 export class CardModule {}
