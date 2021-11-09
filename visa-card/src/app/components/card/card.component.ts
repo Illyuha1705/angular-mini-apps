@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class CardComponent implements OnInit {
     cardForm: FormGroup;
-    saveCardData = localStorage.getItem('isSaved') || false;
+    saveCardData: boolean = (!!localStorage.getItem('isSaved')) || false;
 
     ngOnInit(): void {
         this.initForm();
@@ -26,13 +26,6 @@ export class CardComponent implements OnInit {
         return inputValue.replace(/[^0-9]*/g, '').replace(/(.{4})/g, '$1-').substring(0, inputLength);
     }
 
-    transformFormValue(): void {
-        this.cardForm.controls['cardNumber'].setValue(this.transformInputValue(this.cardForm.controls['cardNumber'].value, 19));
-        this.cardForm.controls['cardMonth'].setValue(this.transformInputValue(this.cardForm.controls['cardMonth'].value, 2));
-        this.cardForm.controls['cardYear'].setValue(this.transformInputValue(this.cardForm.controls['cardYear'].value, 2));
-        this.cardForm.controls['cardCvv'].setValue(this.transformInputValue(this.cardForm.controls['cardCvv'].value, 3));
-    }
-
     sentCardDataToLs(): void {
         if (this.saveCardData) {
             this.transformFormValue();
@@ -42,6 +35,13 @@ export class CardComponent implements OnInit {
             localStorage.clear();
             this.cardForm.reset();
         }
+    }
+
+    private transformFormValue(): void {
+        this.cardForm.controls['cardNumber'].setValue(this.transformInputValue(this.cardForm.controls['cardNumber'].value, 19));
+        this.cardForm.controls['cardMonth'].setValue(this.transformInputValue(this.cardForm.controls['cardMonth'].value, 2));
+        this.cardForm.controls['cardYear'].setValue(this.transformInputValue(this.cardForm.controls['cardYear'].value, 2));
+        this.cardForm.controls['cardCvv'].setValue(this.transformInputValue(this.cardForm.controls['cardCvv'].value, 3));
     }
 
     private initForm(): void {
