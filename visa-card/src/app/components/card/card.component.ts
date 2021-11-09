@@ -48,7 +48,7 @@ export class CardComponent implements OnInit {
         const cardNumber = JSON.parse(localStorage.getItem('card-data')) || null;
         this.cardForm = new FormGroup({
             'cardNumber': new FormControl(cardNumber?.cardNumber || '', [Validators.required, Validators.minLength(19)]),
-            'cardMonth': new FormControl(cardNumber?.cardMonth || '', [Validators.required, Validators.minLength(2)]),
+            'cardMonth': new FormControl(cardNumber?.cardMonth || '', [Validators.required, Validators.minLength(2), Validators.min(1), Validators.max(12)]),
             'cardYear': new FormControl(cardNumber?.cardYear || '', [Validators.required, Validators.minLength(2)]),
             'cardCvv': new FormControl(cardNumber?.cardCvv || '', [Validators.required]),
         });

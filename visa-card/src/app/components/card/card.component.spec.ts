@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CardComponent } from './card.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NumbersOnly } from '../../directives/card-number.directive';
 
 describe('CardComponent', () => {
@@ -14,6 +14,10 @@ describe('CardComponent', () => {
         removeItem: (key: string) => delete store[key],
         clear: () => store = {},
     };
+
+    const cardForm: FormGroup = new FormGroup({
+
+    });
 
     beforeEach(
         waitForAsync(() => {
@@ -62,4 +66,7 @@ describe('CardComponent', () => {
         expect(Object.keys(store).length).toBe(0);
     });
 
+    it('form should be invalid when empty', () => {
+       expect(component.cardForm.valid).toBeFalsy();
+    });
 });
