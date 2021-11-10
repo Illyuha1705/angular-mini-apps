@@ -1,23 +1,27 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CardComponent } from './card.component';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NumbersOnly } from '../../directives/card-number.directive';
+
+let store = {};
+
+const localStorageMock = {
+    getItem: (key: string): string => store[key] || null,
+    setItem: (key: string, value: string) => store[key] = value,
+    removeItem: (key: string) => delete store[key],
+    clear: () => store = {},
+};
+
+const cardFormMock: FormGroup = new FormGroup({
+    'cardNumber': new FormControl( 'aa', [Validators.required, Validators.minLength(19)]),
+    'cardMonth': new FormControl( 'dd', [Validators.required, Validators.minLength(2), Validators.min(1), Validators.max(12)]),
+    'cardYear': new FormControl('ddf', [Validators.required, Validators.minLength(2)]),
+    'cardCvv': new FormControl( 'sdf', [Validators.required]),
+});
 
 describe('CardComponent', () => {
     let component: CardComponent;
     let fixture: ComponentFixture<CardComponent>;
-    let store = {};
-
-    const localStorageMock = {
-        getItem: (key: string): string => store[key] || null,
-        setItem: (key: string, value: string) => store[key] = value,
-        removeItem: (key: string) => delete store[key],
-        clear: () => store = {},
-    };
-
-    const cardForm: FormGroup = new FormGroup({
-
-    });
 
     beforeEach(
         waitForAsync(() => {
@@ -34,6 +38,8 @@ describe('CardComponent', () => {
 
         component.ngOnInit();
         fixture.detectChanges();
+
+
     });
 
     it('should create', () => {
@@ -68,5 +74,18 @@ describe('CardComponent', () => {
 
     it('form should be invalid when empty', () => {
        expect(component.cardForm.valid).toBeFalsy();
+    });
+
+    it('should have card data', () => {
+        component.toggleSaveCardData();
+        localStorageMock.setItem('card-data', JSON.stringify(cardFormMock.value));
+
+        const cardNumbers = JSON.parse(store['card-data']) || null;
+        expect(cardNumbers).toEqual({
+            'cardNumber': 'aa',
+            'cardMonth': 'dd',
+            'cardYear': 'ddf',
+            'cardCvv': 'sdf'
+        });
     });
 });
