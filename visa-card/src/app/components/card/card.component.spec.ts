@@ -12,12 +12,12 @@ const localStorageMock = {
     clear: () => store = {},
 };
 
-const cardFormMock: FormGroup = new FormGroup({
+/*const cardFormMock: FormGroup = new FormGroup({
     'cardNumber': new FormControl( 'aa', [Validators.required, Validators.minLength(19)]),
     'cardMonth': new FormControl( 'dd', [Validators.required, Validators.minLength(2), Validators.min(1), Validators.max(12)]),
     'cardYear': new FormControl('ddf', [Validators.required, Validators.minLength(2)]),
     'cardCvv': new FormControl( 'sdf', [Validators.required]),
-});
+});*/
 
 describe('CardComponent', () => {
     let component: CardComponent;
@@ -36,10 +36,7 @@ describe('CardComponent', () => {
         fixture = TestBed.createComponent(CardComponent);
         component = fixture.componentInstance;
 
-        component.ngOnInit();
         fixture.detectChanges();
-
-
     });
 
     it('should create', () => {
@@ -72,20 +69,42 @@ describe('CardComponent', () => {
         expect(Object.keys(store).length).toBe(0);
     });
 
-    it('form should be invalid when empty', () => {
-       expect(component.cardForm.valid).toBeFalsy();
+    it('form should be INVALID when empty', () => {
+        component.ngOnInit();
+        expect(component.cardForm.valid).toBeFalsy();
     });
 
-    it('should have card data', () => {
-        component.toggleSaveCardData();
-        localStorageMock.setItem('card-data', JSON.stringify(cardFormMock.value));
+    it('should render input elements', () => {
+       const compiled = fixture.debugElement.nativeElement;
 
-        const cardNumbers = JSON.parse(store['card-data']) || null;
-        expect(cardNumbers).toEqual({
-            'cardNumber': 'aa',
-            'cardMonth': 'dd',
-            'cardYear': 'ddf',
-            'cardCvv': 'sdf'
-        });
+       const cardNumber = compiled.querySelector('.card__number-input');
+       const cardMonth = compiled.querySelector('.input-month');
+       const cardYear = compiled.querySelector('.input-year');
+       const cardCvv = compiled.querySelector('.back-part__input');
+
+       expect(cardNumber).toBeTruthy();
+       expect(cardMonth).toBeTruthy();
+       expect(cardYear).toBeTruthy();
+       expect(cardCvv).toBeTruthy();
     });
+
+    it('should test form validity', () => {
+        const form = component.cardForm;
+        expect(form.valid).toBeFalsy();
+
+        const cardNumber = form.controls['cardNumber'];
+        cardNumber.setValue('7846-3446-4688-4647');
+
+        const cardMonth = form.controls['cardMonth'];
+        cardMonth.setValue('12');
+
+        const cardYear = form.controls['cardYear'];
+        cardYear.setValue('26');
+
+        const cardCvv = form.controls['cardCvv'];
+        cardCvv.setValue('236');
+
+        expect(form.valid).toBeTruthy();
+    });
+
 });
